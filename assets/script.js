@@ -1,10 +1,12 @@
 // TODO: Style current HTML
 
-const apiKey ='bdc4b4130942cbaf0f27dca739d53c1a'
+const apiKey = 'bdc4b4130942cbaf0f27dca739d53c1a';
 
 const history = JSON.parse(localStorage.getItem('history')) || [];
 // TODO: Populate history list from local storage when page loads
 
+
+// Search City
 $('#search-form').on('submit', function(event) {
     event.preventDefault();
 
@@ -35,6 +37,7 @@ $('#search-form').on('submit', function(event) {
                     const today = weatherList[0];
                     console.log(today);
                      // TODO: put today's weather in container for today's weather
+                     
 
                     // 5 days forecast
                     for (let i = 1; i < weatherList.length; i += 8) {

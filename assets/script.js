@@ -4,7 +4,7 @@ const apiKey = 'bdc4b4130942cbaf0f27dca739d53c1a';
 const history = JSON.parse(localStorage.getItem('history')) || [];
 // TODO: Populate history list from local storage when page loads
 
-
+console.log()
 // Search City
 $('#search-form').on('submit', function(event) {
     event.preventDefault();
@@ -36,45 +36,55 @@ $('#search-form').on('submit', function(event) {
             $.ajax({ url: weatherQueryUrl })
                 .then(function(weatherResponse) {
                     // https://openweathermap.org/img/w/" + iconcode + ".png"
-
                     console.log(weatherResponse);
 
                     // Put the response on the HTML page
                     const weatherList = weatherResponse.list;
                     // Current forecast
-                    const today = weatherList[0];
+                    const current = weatherList[0];
                     console.log(today);
                     
                      const currentCity = response[0].name;
                      const currentTime = moment().format("dddd, MMMM YYYY, h:mm:ss a");
-                     const currentTemp = today.main.temp;
-                     const currentHumidity = today.main.humidity;
-                     const currentWind = today.wind.speed;
-                     const currentIcon = today.weather[0].icon;
-                     const currentDescrip = today.weather[0].description;
+                     const currentIcon = current.weather[0].icon;
+                     const currentTemp = current.main.temp;
+                     const currentHumidity = current.main.humidity;
+                     const currentWind = current.wind.speed;
+                     const currentDescrip = current.weather[0].description;
                    
                      // TODO: put today's weather in container for today's weather
+                     $('#current').html('');
+                     
                      $("#city-name").text(currentCity);
                      $("#time-date").text(currentTime);
+                     $("#icon").html(
+                        `<img src="http://openweathermap.org/img/wn/${currentIcon}.png">`
+                    );  
                      $("#temp").text("Temperature: " + currentTemp.toFixed(0) + "°C");
                      $("#humidity").text("Humidity: " + currentHumidity + "%");
                      $("#wind-speed").text("Wind speed: " + currentWind + "mph");
                      $("#description").text("Description: " + currentDescrip);
-                     $("#icon").html(
-                         `<img src="http://openweathermap.org/img/wn/${currentIcon}.png">`
-                     );                  
-
-                    
-                     var temp = weatherResponse.list[0].main.temp;
-                     var humidity = weatherResponse.list[0].main.humidity;
-
+                                    
+                     
+                     
                     // 5 days forecast
                     for (let i = 1; i < weatherList.length; i += 8) {
                         const weather = weatherList[i];
-                   
-        
+                                           
                         console.log(weather);
                         // TODO: put 5 day's forecast weather in container for the 5 day forecast
+                        $('#forecast').html('');
+                       
+                            const timestamp = weather.dt;
+                        
+                            const forecastIconCode = weather.weather[0].icon;
+                            const forecastIconUrl = "https://openweathermap.org/img/w/" + forecastIconCode + ".png";
+                            const forecastTemperature = weather.main.temp;
+                            const forecastWeatherDescription = weather.weather[0].description;
+                            const forecastWindSpeed = weather.wind.speed;
+                            const forecastHumidity = weather.main.humidity;
+                            const forecastDate = new Date(timestamp * 1000);
+                            const forecastFormattedDate = forecastDate.toLocaleDateString();
                         
                     }
                 });

@@ -3,13 +3,14 @@
 const apiKey = 'bdc4b4130942cbaf0f27dca739d53c1a';
 const history = JSON.parse(localStorage.getItem('history')) || [];
 // TODO: Populate history list from local storage when page loads
+const userInput = $('#search-input').val();
 
 console.log()
 // Search City
 $('#search-form').on('submit', function(event) {
     event.preventDefault();
-
     const userInput = $('#search-input').val();
+
     const queryUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + userInput + '&limit=5&appid=' + apiKey;
     // TODO: put the search value on the history list container
 
@@ -42,7 +43,7 @@ $('#search-form').on('submit', function(event) {
                     const weatherList = weatherResponse.list;
                     // Current forecast
                     const current = weatherList[0];
-                    console.log(today);
+                   // console.log(today);
                     
                      const currentCity = response[0].name;
                      const currentTime = moment().format("dddd, MMMM YYYY, h:mm:ss a");
@@ -53,28 +54,21 @@ $('#search-form').on('submit', function(event) {
                      const currentDescrip = current.weather[0].description;
                    
                      // TODO: put today's weather in container for today's weather
-                     $('#current').html('');
-                     
-                     $("#city-name").text(currentCity);
-                     $("#time-date").text(currentTime);
-                     $("#icon").html(
-                        `<img src="http://openweathermap.org/img/wn/${currentIcon}.png">`
-                    );  
-                     $("#temp").text("Temperature: " + currentTemp.toFixed(0) + "°C");
-                     $("#humidity").text("Humidity: " + currentHumidity + "%");
-                     $("#wind-speed").text("Wind speed: " + currentWind + "mph");
-                     $("#description").text("Description: " + currentDescrip);
-                                    
-                     
-                     
-                    // 5 days forecast
-                    for (let i = 1; i < weatherList.length; i += 8) {
-                        const weather = weatherList[i];
-                                           
-                        console.log(weather);
+                     $('#current').html(`
+                     <p>City:${currentCity}</p>
+                     <p>Date:${currentTime}</p>
+                     <img src="http://openweathermap.org/img/wn/${currentIcon}.png"></img>');
+                     <p>${currentDescrip}</p>
+                     <p>Temperature: ${currentTemp.toFixed(0)}°C</p>
+                     <p>Humidity: ${currentHumidity} %</p>
+                     <p>Wind speed: ${currentWind}mph</p>
+                     `);
+                                        // 5 days forecas                                      
+                        //console.log(weather);
                         // TODO: put 5 day's forecast weather in container for the 5 day forecast
                         $('#forecast').html('');
-                       
+                        for (let i = 1; i < weatherList.length; i += 8) {
+                            const weather = weatherList[i];
                             const timestamp = weather.dt;
                         
                             const forecastIconCode = weather.weather[0].icon;
@@ -85,7 +79,19 @@ $('#search-form').on('submit', function(event) {
                             const forecastHumidity = weather.main.humidity;
                             const forecastDate = new Date(timestamp * 1000);
                             const forecastFormattedDate = forecastDate.toLocaleDateString();
-                        
+
+                            $('#forecast').append(`
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-title">${forecastFormattedDate}</p>
+                                    <img src="${forecastIconUrl}" class="card-img-top">
+                                    <p class="card-text">${forecastWeatherDescription}</p>
+                                    <p class="card-text">Temperature: ${forecastTemperature.toFixed(0)}°C</p>
+                                    <p class="card-text">Humidity: ${forecastHumidity} %</p>
+                                    <p class="card-text">Wind speed: ${forecastWindSpeed}mph</p>
+                                    </div>
+                                    `);
+                                   
                     }
                 });
         });

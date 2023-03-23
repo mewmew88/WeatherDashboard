@@ -33,6 +33,10 @@ $('#search-form').on('submit', function(event) {
             
             $('#search-input').val('');
 
+            //clear search list 
+            
+
+
             // Call 5 day weather forecast API after we have city lat and lon value
             $.ajax({ url: weatherQueryUrl })
                 .then(function(weatherResponse) {
@@ -54,7 +58,8 @@ $('#search-form').on('submit', function(event) {
                      const currentDescrip = current.weather[0].description;
                    
                      // TODO: put today's weather in container for today's weather
-                     $('#current').html(`
+                    
+                     $('#current').append(`
                      <p>City:${currentCity}</p>
                      <p>Date:${currentTime}</p>
                      <img src="http://openweathermap.org/img/wn/${currentIcon}.png"></img>');

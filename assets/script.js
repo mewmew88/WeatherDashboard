@@ -38,7 +38,7 @@ function buttonsCity (city) {
 function forecastDiv (day, icon,image, temp, wind, humidity) {
     let weather = $(`<div class="col forecast-tiles">
                         <h3>${day}</h3>
-                        <p>${icon}</p>
+                        <img src="https://openweathermap.org/img/w/${icon}.png" alt="weather icon">
                         <p>Temp: ${temp} C</p>
                         <p>Wind: ${wind} KPH</p>
                         <p>Humidity: ${humidity}</p>

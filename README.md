@@ -40,6 +40,8 @@ When a user click on a city in the search history they are again presented with 
 
 ## Screenshot
 
+The deployed link to [WeatherDashboard App](https://mewmew88.github.io/WeatherDashboard/)
+
 The following image shows a mock-up of the WeatherDashboard appearance and functionality:
 
 ![Weather Dashboard](./assets/images/weatherapp.png)
